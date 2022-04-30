@@ -54,7 +54,7 @@ CREATE TABLE price (
 DROP TABLE IF EXISTS laboratory_data;
 CREATE TABLE laboratory_data(
 	id SERIAL PRIMARY KEY, 
-	user_id bigint UNSIGNED, # РІРµР·РґРµ РЅР°РїРёСЃР°Р» USER РІРјРµСЃС‚Рѕ patient, РЅРѕ РЅРµ Р·РЅР°СЋ РєР°Рє С‚РµРїРµСЂСЊ РїРѕРјРµРЅСЏС‚СЊ РІРѕ РІСЃРµРј РєРѕРґРµ
+	user_id bigint UNSIGNED, # ГђВІГђВµГђВ·ГђВґГђВµ ГђВЅГђВ°ГђВїГђВёГ‘ВЃГђВ°ГђВ» USER ГђВІГђВјГђВµГ‘ВЃГ‘вЂљГђВѕ patient, ГђВЅГђВѕ ГђВЅГђВµ ГђВ·ГђВЅГђВ°Г‘ЕЅ ГђВєГђВ°ГђВє Г‘вЂљГђВµГђВїГђВµГ‘в‚¬Г‘Е’ ГђВїГђВѕГђВјГђВµГђВЅГ‘ВЏГ‘вЂљГ‘Е’ ГђВІГђВѕ ГђВІГ‘ВЃГђВµГђВј ГђВєГђВѕГђВґГђВµ
 	blood_an MEDIUMBLOB ,
 	urina_an MEDIUMBLOB,
 	created_at DATETIME DEFAULT NOW(),
@@ -198,15 +198,15 @@ CREATE TABLE procedures_list  (
 	FOREIGN KEY (procedure_numb) REFERENCES price(procedure_numb)
 	) ;
 
-#конец создания таблиц
+#ГЄГ®Г­ГҐГ¶ Г±Г®Г§Г¤Г Г­ГЁГї ГІГ ГЎГ«ГЁГ¶
 
 
 
 
 
-# Представления, процедуры, функции
+# ГЏГ°ГҐГ¤Г±ГІГ ГўГ«ГҐГ­ГЁГї, ГЇГ°Г®Г¶ГҐГ¤ГіГ°Г», ГґГіГ­ГЄГ¶ГЁГЁ
 
-#месячный заработок
+#Г¬ГҐГ±ГїГ·Г­Г»Г© Г§Г Г°Г ГЎГ®ГІГ®ГЄ
 DROP VIEW IF EXISTS mounth_debit ;
 CREATE VIEW mounth_debit AS 
 	SELECT sum(cost) FROM bill
@@ -214,7 +214,7 @@ CREATE VIEW mounth_debit AS
 	
 
 
-#месячные процедуры
+#Г¬ГҐГ±ГїГ·Г­Г»ГҐ ГЇГ°Г®Г¶ГҐГ¤ГіГ°Г»
 DROP VIEW IF EXISTS procedures_mounth_list ;
 CREATE VIEW procedures_mounth_list AS 
 	SELECT patients.second_name, doctors.second_name AS doctors, procedures_list.name 
@@ -225,7 +225,7 @@ CREATE VIEW procedures_mounth_list AS
 	WHERE datediff( Now(), history.created_at ) < 30;
 
 
-# количество выполненых манипуляций 
+# ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГўГ»ГЇГ®Г«Г­ГҐГ­Г»Гµ Г¬Г Г­ГЁГЇГіГ«ГїГ¶ГЁГ© 
 
 DROP VIEW IF EXISTS procedures_count ;
 CREATE VIEW procedures_count AS 
@@ -237,7 +237,7 @@ CREATE VIEW procedures_count AS
 	GROUP BY pr_name ;
 
 
-#список выполненых пациеyту манипуляций
+#Г±ГЇГЁГ±Г®ГЄ ГўГ»ГЇГ®Г«Г­ГҐГ­Г»Гµ ГЇГ Г¶ГЁГҐyГІГі Г¬Г Г­ГЁГЇГіГ«ГїГ¶ГЁГ©
 
 
 
@@ -269,7 +269,7 @@ CALL user_proc_list (1);
 
 
 
-#изменение статуса исследования
+#ГЁГ§Г¬ГҐГ­ГҐГ­ГЁГҐ Г±ГІГ ГІГіГ±Г  ГЁГ±Г±Г«ГҐГ¤Г®ГўГ Г­ГЁГї
 DROP TRIGGER IF EXISTS change_proc_status ;
 delimiter //
 CREATE TRIGGER change_proc_status AFTER INSERT ON dicom_data
